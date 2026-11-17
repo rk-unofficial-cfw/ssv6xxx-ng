@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: GPL-2.0
+#
+# ssv6xxx-ng - Kconfig for out-of-tree builds
+#
+config WLAN_VENDOR_SSV
+	bool "SSV wireless LAN devices"
+	default y
+	help
+	  Enable support for SSV (iComm / South Silicon Valley) wireless
+	  LAN devices over SDIO.
+
+if WLAN_VENDOR_SSV
+
+config SSV6051
+	tristate "SSV6051 SDIO WLAN driver (rewritten)"
+	depends on MMC && MAC80211
+	select FW_LOADER
+	help
+	  Rewritten driver for the SSV6051 (Cabrio-E) 802.11n SDIO chipset,
+	  targeting kernels 6.6 and later. Station mode only.
+
+	  The firmware image (ssv6051-wifi.bin) must be installed in
+	  /lib/firmware. The MAC address is read from the chip efuse;
+	  it can be overridden with the initmac module parameter.
+
+endif # WLAN_VENDOR_SSV
